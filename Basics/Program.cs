@@ -10,72 +10,59 @@ namespace Basics
     {
         static void Main(string[] args)
         {
-            /* 
-            //console class is a static class 
-            //properties of console class
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Title = "C# basics";
+            for (int i = 0; i < 10; i++) {
+                if (i == 5)
+                {
+                    Console.WriteLine("Counter is at " + i++);
+                    continue;
+                }
+                else if (i > 5) {
+                    Console.WriteLine("Counter has reached above 5");
+                }
 
-            Console.Write("Enter your name: ");
-            string name = Console.ReadLine();
-            Console.WriteLine("Your name is: " + name);
-
-
-            int x = 45;
-            Console.WriteLine(x);
-
-            Console.Write("Enter any number: ");
-            int y = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("You entrered: " +  y);
-
-            //readkey and read method
-            Console.WriteLine("Enter a no to get its ASCII value");
-            int z = Console.Read();
-            Console.WriteLine(z)
-            */
+                else
+                {
+                    Console.WriteLine("Counter has not reached 5 yet");
+                }
+            }
 
 
+            int y = 1;
+            while (y <= 10) { 
+                Console.WriteLine($"5 x {y} = {5*y}");
+                y++;
+            }
 
-            //DATA TYPES
-            /*
-            Console.WriteLine($"Byte => Minimum Range:{byte.MinValue} and Maximum Range:{byte.MaxValue}");
-            Console.WriteLine($"Integer => Minimum Range:{int.MinValue} and Maximum Range:{int.MaxValue}");
-            Console.WriteLine($"Float => Minimum Range:{float.MinValue} and Maximum Range:{float.MaxValue}");
-            Console.WriteLine($"Long => Minimum Range:{long.MinValue} and Maximum Range:{long.MaxValue}");
-            Console.WriteLine($"Double => Minimum Range:{double.MinValue} and Maximum Range:{double.MaxValue}");
-            Console.ReadKey();  */
+            Console.WriteLine("Enter No between 1 - 5 (-1 to exit)");
+            string choice = Console.ReadLine();
+            if (choice == "-1") {
+                goto stmt9;
+            }
 
-            string s1 = "saad mumtaz";
-            string s2 = s1;
+            switch (choice) {
 
-            //now s2 will point to a new string object on heap
-            s2 = "saad mumtaz khan";
-            Console.WriteLine(s1);
+                case "1":
+                    Console.WriteLine("you choose one");
+                    break;
+                case "2":
+                    Console.WriteLine("you choose two");
+                    break;
+                case "3":
+                    Console.WriteLine("you choose three");
+                    break;
+                case "4":
+                    Console.WriteLine("you choose four");
+                    break;
+                case "5":
+                    Console.WriteLine("you choose five");
+                    break;
+                default: 
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
 
-
-            int[] arr = { 1, 2, 5, 6 };
-            int[] arr2 = arr;
-
-            arr2[1] = 3;
-
-            Console.WriteLine(arr[1]);
-
-            //type casting
-            int a = 12;
-            float f1 = a;  //implicit
-
-            float f2 = 3.8971f;
-            int b = (int) f2; //explicit
-
-
-            //through helper methods
-            string str1 = "43";
-            int c = Convert.ToInt32(str1);
-            Console.WriteLine(c);   
-
-
+        stmt9:
+            return;
         }
     }
 }
