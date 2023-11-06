@@ -61,6 +61,11 @@ namespace Basics
                     break;
             }
 
+            int[] arr = { 1, 3, 4, 6, 7, 8 };
+            foreach (var v in arr) {
+                Console.WriteLine (v);
+            }
+
         stmt9:
             return;
         }
