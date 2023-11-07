@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -10,77 +11,45 @@ namespace Basics
 {
     internal class Program
     {
-        public static void test1(){
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine("Test 1: " + i);
-            }
-            Console.WriteLine("t1 thread is exiting");
-        
+        static void func1() {
+            long counter = 0;
+            for (int i = 0; i < 1000000000; i++) {
+                counter++;
+            } 
+            Console.WriteLine("Counter Value from 1 is: " + counter);
         }
 
-        public static void test2()
+        static void func2()
         {
-            for (int i = 0; i < 100; i++)
+            long counter = 0;
+            for (int i = 0; i < 1000000000; i++)
             {
-                Console.WriteLine("Test 2: " + i);
-                if( i == 50) { 
-                    Console.WriteLine("t2 Thread going to Sleep");
-                    //Thread.Sleep(5000);
-                    Console.WriteLine("t2 thread Waking Up");
-                }
+                counter++;
             }
-            Console.WriteLine("t2 Thread is exiting");
+            Console.WriteLine("Counter Value from 2 is: " + counter);
         }
-
-        public static void test3(object max)
+        static void Main(string[] args)
         {
-            int max_updated = Convert.ToInt32(max);
-            for (int i = 0; i < max_updated; i++)
-            {
-                Console.WriteLine("Test 3: " + i);
-            }
-            Console.WriteLine("t3 thread is exiting");
-        }
+            Stopwatch s1 = new Stopwatch();
+            func1();
+            func2();
+            s1.Stop();
 
+            Console.WriteLine("Total time in single threaded model: " + s1.ElapsedMilliseconds);
 
-        public void ThreadLockingDemo() {
-            lock(this) {
-                Console.Write("[C# is an ");
-                Thread.Sleep(5000);
-                Console.Write("object oriented language]\n");
-            }            
-        }
+            Stopwatch s2 = new Stopwatch();
+            Console.WriteLine("Now making Threads");
 
-        static void Main(string[] args) {
-            Console.WriteLine("Main Thread Started");
-            
-            Thread t1 = new Thread(test1);
+            ThreadStart obj1 = new ThreadStart(func1);
+            Thread t1 = new Thread(obj1);
 
-            ThreadStart obj = new ThreadStart(test2);
-            Thread t2 = new Thread(obj);
+            ThreadStart obj2 = new ThreadStart(func2);
+            Thread t2 = new Thread(obj2);
+            t1.Start();t2.Start();
+            t1.Join();t2.Join();
 
-            ParameterizedThreadStart Pobj = new ParameterizedThreadStart(test3);
-            Thread t3 = new Thread(Pobj);
-
-            //t1.Priority = ThreadPriority.Highest;
-            t1.Start();t2.Start();t3.Start(67);
-            t1.Join();t2.Join();t3.Join();
-
-            Program p1 = new Program();
-
-            ThreadStart obj2 = new ThreadStart(p1.ThreadLockingDemo);
-            Thread t4 = new Thread(obj2);
-            t4.Priority = ThreadPriority.Highest;
-            t4.Start();
-
-
-            Thread t5 = new Thread(p1.ThreadLockingDemo);
-            t5.Start();
-            t4.Join();t5.Join();
-
-            
-            Console.WriteLine("Main Thread Exiting");
+            s2.Stop();
+            Console.WriteLine("Total time in multi threaded model: " + s2.ElapsedMilliseconds);
         }
     }
 }
