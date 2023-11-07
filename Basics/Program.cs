@@ -9,47 +9,39 @@ using System.Threading.Tasks;
 
 namespace Basics
 {
+    public enum Toyota { 
+        Yaris,
+        Altis,
+        Grande,
+        Cross,
+        Revo,
+        Fortuner,
+        LandCruiser
+    } 
+
+    public class Car
+    {
+        public Toyota toyota;
+
+        public Car(int i) {
+            toyota = (Toyota)i;
+        }
+    }
     internal class Program
     {
-        static void func1() {
-            long counter = 0;
-            for (int i = 0; i < 1000000000; i++) {
-                counter++;
-            } 
-            Console.WriteLine("Counter Value from 1 is: " + counter);
-        }
-
-        static void func2()
+        public static void Main(string[] args)
         {
-            long counter = 0;
-            for (int i = 0; i < 1000000000; i++)
-            {
-                counter++;
-            }
-            Console.WriteLine("Counter Value from 2 is: " + counter);
-        }
-        static void Main(string[] args)
-        {
-            Stopwatch s1 = new Stopwatch();
-            func1();
-            func2();
-            s1.Stop();
+            Car c1 = new Car(1); //Altis
+            Car c2 = new Car(0); //Yaris
+            Car c3 = new Car(2); //Grande
+            Car c4 = new Car(3); //cross
+            Car c5 = new Car(6); //landcruiser
 
-            Console.WriteLine("Total time in single threaded model: " + s1.ElapsedMilliseconds);
-
-            Stopwatch s2 = new Stopwatch();
-            Console.WriteLine("Now making Threads");
-
-            ThreadStart obj1 = new ThreadStart(func1);
-            Thread t1 = new Thread(obj1);
-
-            ThreadStart obj2 = new ThreadStart(func2);
-            Thread t2 = new Thread(obj2);
-            t1.Start();t2.Start();
-            t1.Join();t2.Join();
-
-            s2.Stop();
-            Console.WriteLine("Total time in multi threaded model: " + s2.ElapsedMilliseconds);
+            Console.WriteLine(c1.toyota);
+            Console.WriteLine(c2.toyota);
+            Console.WriteLine(c3.toyota);
+            Console.WriteLine(c4.toyota);
+            Console.WriteLine(c5.toyota);
         }
     }
 }
