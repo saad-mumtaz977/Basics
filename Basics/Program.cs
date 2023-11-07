@@ -9,39 +9,69 @@ using System.Threading.Tasks;
 
 namespace Basics
 {
-    public enum Toyota { 
-        Yaris,
-        Altis,
-        Grande,
-        Cross,
-        Revo,
-        Fortuner,
-        LandCruiser
-    } 
+    public delegate void myDelegate();
+    public delegate void myDelegate2(string s); 
 
-    public class Car
-    {
-        public Toyota toyota;
+    internal delegate void myDelegate3();
+    internal delegate string myDelegate4();
 
-        public Car(int i) {
-            toyota = (Toyota)i;
+    internal delegate void myDelegate5(string str);
+
+    public class Square {
+        public int side;
+
+        public Square(int side)
+        {
+            this.side = side;
         }
+
+        public void GetArea() {
+            Console.WriteLine(side * side);
+        }
+
+        public void GetParameter() { 
+            Console.WriteLine(4*side);
+        }
+
+    
     }
     internal class Program
     {
+        public static void print() {
+            Console.WriteLine("Hello World"); 
+        }
+
+        public static void print(string s) { 
+            Console.WriteLine(s);
+        }
         public static void Main(string[] args)
         {
-            Car c1 = new Car(1); //Altis
-            Car c2 = new Car(0); //Yaris
-            Car c3 = new Car(2); //Grande
-            Car c4 = new Car(3); //cross
-            Car c5 = new Car(6); //landcruiser
+            myDelegate d1 = new myDelegate(print);
+            d1();
+            myDelegate2 d2 = new myDelegate2(print);
+            d2("My name is Saad");
 
-            Console.WriteLine(c1.toyota);
-            Console.WriteLine(c2.toyota);
-            Console.WriteLine(c3.toyota);
-            Console.WriteLine(c4.toyota);
-            Console.WriteLine(c5.toyota);
+            Square s1 = new Square(100);   
+            
+            //multicast delegate
+            myDelegate3 d3 = new myDelegate3(s1.GetArea);
+            d3 += s1.GetParameter;
+            d3();
+
+            //Anonymous Methods
+            myDelegate4 d4 = new myDelegate4(delegate () {
+                return "this is from an anoymous method";
+            });
+
+            Console.WriteLine(d4());
+            
+            //lambda Expression
+            myDelegate5 d5 = (name) =>
+            {
+                Console.WriteLine("Hello, " + name + ", How are you doing today?");
+            };
+
+            d5("Saad");
         }
     }
 }
