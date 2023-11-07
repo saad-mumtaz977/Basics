@@ -8,52 +8,32 @@ namespace Basics
 {
     internal class Employee
     {
+        private int Id;
+        private string Name;
+        private double Salary;
 
-        private int _id = 0;
-        public int Id
+        static Employee() {
+            Console.WriteLine("Static Constructor Called");
+                }
+        public Employee() { }
+        public Employee(int id, string name, double salary)
         {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                if (value >= 0)
-                {
-                    _id = value;
-                }
-                else
-                {
-                    _id = 9999;
-                }
-            }
+            Id = id;
+            Name = name;
+            Salary = salary;
         }
 
-        private string _name = "";
-        public string Name
+        public Employee(Employee obj) { 
+            Id  = obj.Id;
+            Name = obj.Name;
+            Salary = obj.Salary;
+        }
+
+        public override string ToString()
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    _name = value;
-                }
-                else
-                {
-                    _name = "";
-                }
-            }
+            return $"Id: {Id}, Name: {Name}, Salary: {Salary}00"; 
         }
-
-
-        public void show() {
-            Console.WriteLine("Id: " + Id);
-            Console.WriteLine("Name: " + Name);
-        }
+        List<Employee> list = new List<Employee>(); 
 
     }
 }
